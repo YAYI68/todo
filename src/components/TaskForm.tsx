@@ -1,10 +1,14 @@
-import { useEffect, useState } from "react"
-import { useStateContext } from "../context/StateContext"
+import { useEffect, useState } from "react";
+import { useStateContext } from "../context/StateContext";
 
+interface Todo {
+  id: string;
+  task: string;
+}
 const TaskForm = () => {
     const {  todoId, addTodo , editTodo, todos, deleteTodo } = useStateContext()
     const [text,setText] = useState("")
-    const [todo,setTodo] = useState()
+    const [todo,setTodo] = useState<Todo>()
 
     // console.log({todoId})
 
