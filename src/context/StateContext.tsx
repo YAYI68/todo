@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState, ReactNode } from "react";
+import React, { createContext, useContext, useState, ReactNode, useEffect } from "react";
 import { v4 as uuidv4 } from 'uuid';
 
 interface Todo {
@@ -13,6 +13,7 @@ interface StateContextType {
   editTodo: (id: string, data: string) => void;
   deleteTodo: (id: string) => void;
   todos: Todo[];
+  todo:Todo,
   isCreateOrEdit: boolean;
   setIsCreateOrEdit: React.Dispatch<React.SetStateAction<boolean>>;
 }
@@ -30,6 +31,7 @@ export function StateContextProvider(props: StateContextProviderProps) {
   const [todos, setTodos] = useState<Todo[]>(savedTodos);
   const [todoId, setTodoId] = useState<string>();
   const [isCreateOrEdit, setIsCreateOrEdit] = useState(false);
+  const [todo,setTodo] = useState<Todo>()
 
   const addTodo = (data: string) => {
     const todo: Todo = {
@@ -40,6 +42,11 @@ export function StateContextProvider(props: StateContextProviderProps) {
     localStorage.setItem("todos", JSON.stringify([...todos, todo]));
     setIsCreateOrEdit(false);
   }
+
+  useEffect(()=>{
+    const todo = todos.find((todo)=>todo.id === todoId)
+    setTodo(todo)
+  },[todoId])
   
   const editTodo = (id: string, data: string) => {
     const updatedTodos = todos.map(todo =>
@@ -67,6 +74,7 @@ export function StateContextProvider(props: StateContextProviderProps) {
     todos,
     isCreateOrEdit,
     setIsCreateOrEdit,
+    todo
   };
 
   return (

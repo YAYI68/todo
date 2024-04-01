@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useStateContext } from "../context/StateContext";
 
 interface Todo {
@@ -6,18 +6,15 @@ interface Todo {
   task: string;
 }
 const TaskForm = () => {
-    const {  todoId, addTodo , editTodo, todos, deleteTodo } = useStateContext()
+    const {  todoId, addTodo , editTodo, todo, deleteTodo } = useStateContext()
     const [text,setText] = useState("")
-    const [todo,setTodo] = useState<Todo>()
+    
 
     // console.log({todoId})
 
     console.log({todo})
 
-    useEffect(()=>{
-      const todo = todos.find((todo)=>todo.id === todoId)
-      setTodo(todo)
-    },[todoId])
+ 
     
    
     
@@ -31,7 +28,6 @@ const TaskForm = () => {
            else{
             addTodo(text)
            }
-      
     }
   return (
     <form onSubmit={handleOnsubmit} className='h-full w-full relative p-4 flex flex-col justify-between'>
